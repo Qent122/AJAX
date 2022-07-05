@@ -19,7 +19,8 @@
     <div id="btn3">Ajouter du texte ci dessous 3</div>
     <div id="response3"></div>
 
-
+    <div id="btn4">Ajouter du texte ci dessous 4</div>
+    <div id="response4"></div>
 
 
 
@@ -100,6 +101,35 @@
         }
 
         btn3.addEventListener('click', postFruits);
+
+        //=======================================================================================
+        // Test 4
+        //=======================================================================================
+        const btn4 = document.querySelector('#btn4');
+        const reponse4 = document.querySelector('#reponse4');
+
+        function getDog() {
+
+            fetch('https://dog.ceo/api/breeds/image/random')
+                .then(function(response) {
+                    return response.json()
+                })
+                .then(function(data) {
+                    console.log(data.message);
+                    const img = `<img src="${data.message}" alt="photo de chien" width="400px">`;
+                    response4.innerHTML = img
+
+                })
+                .catch(function(err) {
+                    console.log(err);
+                })
+
+        }
+
+
+
+
+        btn4.addEventListener('click', getDog);
     </script>
 
 </body>

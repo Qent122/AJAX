@@ -19,4 +19,3 @@ function Verifie($data)
 }
 
 // Verifie($_GET);
-Verifie($_POST);
