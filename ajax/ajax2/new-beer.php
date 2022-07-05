@@ -1,4 +1,5 @@
 <?php
+
 require('inc/pdo.php');
 require('inc/function.php');
 $title = "Ajouter une bière";
@@ -10,14 +11,33 @@ if(!empty($_POST['submitted'])) {
     // Faille XSS
     $title = trim(strip_tags($_POST['title']));
     $content = trim(strip_tags($_POST['content']));
+    $mail = trim(strip_tags($_POST['mail']));
     // Validation
     $errors = validText($errors,$title,'title',3,100);
     $errors = validText($errors,$content,'content',10,1000);
-    if(count($errors) === 0) {
+    $errors = validEmail($errors, $mail, 'mail');
 
-        die('ok insert into');
+    // validation de mail
+    if(!empty($mail)) {
+        // if email is valid
+    //     if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+    //         $errors['mail'] = 'Veuillez renseigner un email valide';
+    //     }
+    // } else {
+    //     $errors['mail'] = 'Veuillez renseigner un email';
+    }
+
+    if(count($errors) === 0) {
         // insertion en BDD si aucune error
-        $success = true;
+        $sql = "INSERT INTO beer (title,content,created_at) VALUES (:title,:content,NOW())";
+        // INJECTION SQL
+        $query = $pdo->prepare($sql);
+        $query->bindValue(':title',$title, PDO::PARAM_STR);
+        $query->bindValue(':content',$content, PDO::PARAM_STR);
+        $query->execute();
+        $last_id = $pdo->lastInsertId();
+        header('Location: detail-beer.php?id=' . $last_id);
+//        $success = true;
     }
 
 //    if(!empty($title)) {
@@ -46,13 +66,12 @@ if(!empty($_POST['submitted'])) {
 //    }
 
 }
-debug($_POST);
-debug($errors);
+//debug($_POST);
+//debug($errors);
 
 include('inc/header.php'); ?>
-
     <h1>Ajouter une bière</h1>
-    <form action="" method="post">
+    <form action="" method="post" novalidate>
         <label for="title">Titre</label>
         <input type="text" name="title" id="title" value="<?php if(!empty($_POST['title'])) { echo $_POST['title']; } ?>">
         <span class="error"><?php if(!empty($errors['title'])) { echo $errors['title']; } ?></span>
@@ -61,8 +80,13 @@ include('inc/header.php'); ?>
         <textarea name="content" id="content" cols="30" rows="10"><?php if(!empty($_POST['content'])) { echo $_POST['content']; } ?></textarea>
         <span class="error"><?php if(!empty($errors['content'])) { echo $errors['content']; } ?></span>
 
+        <label for="mail">E-mail</label>
+        <input type="email" name="mail" id="mail" value="<?php if(!empty($_POST['mail'])) { echo $_POST['mail']; } ?>">
+        <span class="error"><?php if(!empty($errors['mail'])) { echo $errors['mail']; } ?></span>
+
         <input type="submit" name="submitted" value="Ajouter une bière">
     </form>
 <?php include('inc/footer.php');
+
 
 
