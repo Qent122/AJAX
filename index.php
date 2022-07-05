@@ -16,7 +16,8 @@
     <div id="btn2">Ajouter du texte ci dessous 2</div>
     <div id="response2"></div>
 
-
+    <div id="btn3">Ajouter du texte ci dessous 3</div>
+    <div id="response3"></div>
 
 
 
@@ -30,8 +31,10 @@
         const response1 = document.querySelector('#response1');
 
 
-
+        //=======================================================================================
         // Test 1
+        //=======================================================================================
+
         function getText1(event) {
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -47,8 +50,9 @@
         }
 
         btn1.addEventListener('click', getText1)
-
+        //=======================================================================================
         // Test 2
+        //=======================================================================================
 
         const btn2 = document.querySelector('#btn2');
         const reponse2 = document.querySelector('#reponse2');
@@ -57,7 +61,9 @@
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
+                    // console.log(this.responseText);
+                    response2.innerHTML = this.responseText;
+
                 }
             }
 
@@ -67,6 +73,33 @@
         }
 
         btn2.addEventListener('click', getUser);
+
+        //=======================================================================================
+        // Test 3
+        //=======================================================================================
+
+        const btn3 = document.querySelector('#btn3');
+        const reponse3 = document.querySelector('#reponse3');
+
+        function postFruits() {
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    response3.innerHTML = this.responseText;
+
+                }
+            }
+
+
+            xhttp.open('POST', 'ajax/demo2.php', true);
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhttp.send('fruit=banane&music=basse');
+
+
+        }
+
+        btn3.addEventListener('click', postFruits);
     </script>
 
 </body>
