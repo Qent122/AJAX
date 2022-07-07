@@ -21,6 +21,12 @@ function validText($er, $data, $key, $min, $max)
     return $er;
 }
 
+function dateSite($data,$format = 'd/m/Y à H:i')
+{
+    return date($format,strtotime($data));
+}
+
+
 function validEmail($er, $data, $key)
 {
     if (!empty($data)) {

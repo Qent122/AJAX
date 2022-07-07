@@ -1,14 +1,16 @@
 <?php
 require('inc/pdo.php');
 require('inc/function.php');
+require('inc/request.php');
 $title = "Detail beer";
 if(!empty($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "SELECT * FROM beer WHERE id = :id";
-    $query = $pdo->prepare($sql);
-    $query->bindValue(':id',$id, PDO::PARAM_INT);
-    $query->execute();
-    $beer = $query->fetch();
+//    $sql = "SELECT * FROM beer WHERE id = :id";
+//    $query = $pdo->prepare($sql);
+//    $query->bindValue(':id',$id, PDO::PARAM_INT);
+//    $query->execute();
+//    $beer = $query->fetch();
+    $beer = getBeer($id);
     // debug($beer);
     if(empty($beer)) {
         header('Location: 404.php');
@@ -25,6 +27,7 @@ include('inc/header.php'); ?>
     <p>Date: <?php echo date('d/m/Y à H:i:s', strtotime($beer['created_at'])); ?></p>
     <a href="detail-beer.php?id=<?php echo $beer['id']; ?>">Voir plus</a>
 <?php include('inc/footer.php');
+
 
 
 
