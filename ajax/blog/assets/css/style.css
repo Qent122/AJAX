@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10rem;
+}
+header h1{
+margin: 1rem;
+}
+header nav {
+    width: 50%;
+}
+
+header nav ul {
+    display: flex;
+    justify-content:space-evenly;
+}
+
+header nav ul li{
+    list-style: none;
+}

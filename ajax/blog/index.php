@@ -1,0 +1,14 @@
+<?php
+require('inc/pdo.php');
+require('inc/function.php');
+require('inc/request.php');
+
+include('inc/header.php'); ?>
+
+<h1>Home page</h1>
+
+<?php include('inc/footer.php');
+
+
+
+
